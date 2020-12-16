@@ -20,13 +20,6 @@ from os import listdir
 # Helper functions
 ###################################################
 
-def notify(good):
-  if good:
-    print('TODO: email sundials-developers with success message')
-  else:
-    print('TODO: email sundials-developers with fail message')
-
-
 def sum_for_release(package_names, releases):
   asset_counts = {}
   package_counts = {}
@@ -118,19 +111,20 @@ def poll_github(args):
   # TODO: Check if the response was successful, and if it was not, retry.
   # Request the releases information from GitHub
   r = requests.get('https://api.github.com/repos/LLNL/sundials/releases')
-  if r.ok:
-    # Save the response to a text file for archiving
-    releases = r.json()
-    now = datetime.now(tz=timezone.utc)
-    datestring = '-'.join(map(str, [now.month, now.day, now.year]))
-    filename = '%s/sundials-github-downloads.%s.txt' % (db_path, datestring)
-    with open(filename, 'w') as outfile:
-      json.dump(releases, outfile)
-    print('')
-    print('Successfully polled GitHub... stats saved to %s' % filename)
-    if args.notify: notify(True)
-  else:
-    if args.notify: notify(False)
+  try:
+    r.raise_for_status()
+  except requests.exceptions.HTTPError as e:
+    return "ERROR: " + str(e)
+
+  # Save the response to a text file for archiving
+  releases = r.json()
+  now = datetime.now(tz=timezone.utc)
+  datestring = '-'.join(map(str, [now.month, now.day, now.year]))
+  filename = '%s/sundials-github-downloads.%s.txt' % (db_path, datestring)
+  with open(filename, 'w') as outfile:
+    json.dump(releases, outfile)
+  print('')
+  print('Successfully polled GitHub... stats saved to %s' % filename)
 
 
 ###################################################
@@ -145,8 +139,6 @@ subparsers = parser.add_subparsers(title='subcommands')
 
 poll_parser = subparsers.add_parser('poll', help='poll GitHub for release download statisitics and store them')
 poll_parser.set_defaults(which='poll')
-poll_parser.add_argument('--notify', action='store_true',
-  help='send a success email to sundials-devs@llnl.gov with the stats')
 
 query_parser = subparsers.add_parser('query', help='query release download statisitics')
 query_parser.set_defaults(which='query')
