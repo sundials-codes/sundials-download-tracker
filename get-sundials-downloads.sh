@@ -36,7 +36,7 @@ def sum_for_release(package_names, releases):
 
 
 def find_beginning(all_files, starting_when):
-  file_dates = [datetime.strptime(f.split('.')[1], '%m-%d-%Y') for f in all_files]
+  file_dates = [datetime.strptime(f.split('.')[1], '%m-%d-%Y').replace(tzinfo=timezone.utc) for f in all_files]
   diffs = [(d,idx) for idx, d in enumerate(file_dates) if d-starting_when >= timedelta(days=0)]
   closest_date = min(diffs, key=lambda x: x[0])
   if closest_date[0] != starting_when:
@@ -45,7 +45,7 @@ def find_beginning(all_files, starting_when):
 
 
 def find_ending(all_files, ending_when):
-  file_dates = [datetime.strptime(f.split('.')[1], '%m-%d-%Y') for f in all_files]
+  file_dates = [datetime.strptime(f.split('.')[1], '%m-%d-%Y').replace(tzinfo=timezone.utc) for f in all_files]
   diffs = [(d,idx) for idx, d in enumerate(file_dates) if ending_when-d >= timedelta(days=0)]
   closest_date = max(diffs, key=lambda x: x[0])
   if closest_date[0] != ending_when:
@@ -71,10 +71,10 @@ def query_stats(args):
 
   # Determine time to start counting from
   if args.date:
-    starting_when = datetime.strptime(args.date[0], '%m-%d-%Y')
-    ending_when   = datetime.strptime(args.date[1], '%m-%d-%Y')
+    starting_when = datetime.strptime(args.date[0], '%m-%d-%Y').replace(tzinfo=timezone.utc)
+    ending_when   = datetime.strptime(args.date[1], '%m-%d-%Y').replace(tzinfo=timezone.utc)
   else:
-    starting_when = datetime.strptime('01-01-1970', '%m-%d-%Y')
+    starting_when = datetime.strptime('01-01-1970', '%m-%d-%Y').replace(tzinfo=timezone.utc)
     ending_when   = datetime.now(tz=timezone.utc)
 
   # List files in database
