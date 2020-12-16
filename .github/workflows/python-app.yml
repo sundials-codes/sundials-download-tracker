@@ -34,3 +34,6 @@ jobs:
     - name: Run
       run: |
         python get-sundials-downloads.sh poll
+    - uses: actions/upload-artifact@v2
+      with:
+        path: *.txt
