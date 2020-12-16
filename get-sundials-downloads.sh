@@ -39,8 +39,8 @@ def find_beginning(all_files, starting_when):
   file_dates = [datetime.strptime(f.split('.')[1], '%m-%d-%Y').replace(tzinfo=timezone.utc) for f in all_files]
   diffs = [(d,idx) for idx, d in enumerate(file_dates) if d-starting_when >= timedelta(days=0)]
   closest_date = min(diffs, key=lambda x: x[0])
-  if closest_date[0] != starting_when:
-    print('WARNING: requested starting date is not found in the database, using the next closest date after the starting date')
+  # if closest_date[0] != starting_when:
+    # print('WARNING: requested starting date is not found in the database, using the next closest date after the starting date')
   return (all_files[closest_date[1]], closest_date[0])
 
 
@@ -48,8 +48,8 @@ def find_ending(all_files, ending_when):
   file_dates = [datetime.strptime(f.split('.')[1], '%m-%d-%Y').replace(tzinfo=timezone.utc) for f in all_files]
   diffs = [(d,idx) for idx, d in enumerate(file_dates) if ending_when-d >= timedelta(days=0)]
   closest_date = max(diffs, key=lambda x: x[0])
-  if closest_date[0] != ending_when:
-    print('WARNING: requested ending date is not found in the database, using the next closest date before the ending date')
+  # if closest_date[0] != ending_when:
+    # print('WARNING: requested ending date is not found in the database, using the next closest date before the ending date')
   return (all_files[closest_date[1]], closest_date[0])
 
 ###################################################
