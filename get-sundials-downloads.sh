@@ -19,10 +19,20 @@ from datetime import datetime, timedelta, timezone
 # Helper functions
 ###################################################
 
-def sum_for_release(package_names, releases):
+def sum_up_clones(all_files, start_date, end_date):
+  clone_count = 0
+  for f in all_files:
+    file_date = datetime.strptime(f.split('.')[1], '%m-%d-%Y').replace(tzinfo=timezone.utc)
+    if file_date >= start_date and file_date <= end_date:
+      with open(f, 'r') as json_file:
+        data = json.load(json_file)
+        clone_count = clone_count + data['clones']
+  return clone_count
+
+def sum_for_release(package_names, data):
   asset_counts = {}
   package_counts = {}
-  for release in releases:
+  for release in data['releases']:
     for asset in release['assets']:
       for p in package_names:
         if asset['name'].startswith(p):
@@ -31,7 +41,6 @@ def sum_for_release(package_names, releases):
             package_counts[p] = package_counts[p] + int(asset['download_count'])
           else:
             package_counts[p] = int(asset['download_count'])
-  package_counts['total'] = sum(package_counts.values())
   return package_counts
 
 
@@ -85,20 +94,29 @@ def query_stats(args):
   with open(start_file, 'r') as json_file:
     starting_count = sum_for_release(package_names, json.load(json_file))
 
-  # Loand ending file unless doing all time count
+  # Load ending file unless doing all time count
   if not args.all_time:
     end_file, actual_ending_date = find_ending(all_files, ending_when)
     with open(end_file, 'r') as json_file:
       ending_count = sum_for_release(package_names, json.load(json_file))
-    difference = {key: ending_count[key] - starting_count.get(key, 0) for key in ending_count}
+    total_counts = {key: ending_count[key] - starting_count.get(key, 0) for key in ending_count}
   else:
     actual_ending_date = ending_when
-    difference = starting_count
+    total_counts = starting_count
+
+  print(starting_count)
+  print(ending_count)
+
+  # Now sum up clones
+  total_counts['clones'] = sum_up_clones(all_files, actual_starting_date, actual_ending_date)
+
+  # Now sum up everything
+  total_counts['total'] = sum(total_counts.values())
 
   print('')
   print('Counting downloads from %s UTC to %s UTC\n' % (actual_starting_date, actual_ending_date))
   print('```')
-  print(json.dumps(difference, indent=4))
+  print(json.dumps(total_counts, indent=4))
   print('```')
 
 
@@ -109,21 +127,31 @@ def poll_github(args):
   else:
     db_path = '.'
 
-  # TODO: Check if the response was successful, and if it was not, retry.
+  headers = {'Authorization': 'token %s' % args.token}
+
   # Request the releases information from GitHub
-  r = requests.get('https://api.github.com/repos/LLNL/sundials/releases')
-  try:
-    r.raise_for_status()
-  except requests.exceptions.HTTPError as e:
-    return "ERROR: " + str(e)
+  r = requests.get('https://api.github.com/repos/LLNL/sundials/releases', headers=headers)
+  r.raise_for_status()
+  releases = r.json()
+
+  r2 = requests.get('https://api.github.com/repos/LLNL/sundials/traffic/clones?per=day', headers=headers)
+  r2.raise_for_status()
+  clones = r2.json()
+
+  # Find the clone count for today
+  combined = { 'releases': releases }
+  now = datetime.now(tz=timezone.utc)
+  for clone in clones['clones']:
+    clone_date = datetime.strptime(clone['timestamp'], '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)
+    if clone_date.date() == now.date():
+      combined['clones'] = clone['count']
+      break
 
   # Save the response to a text file for archiving
-  releases = r.json()
-  now = datetime.now(tz=timezone.utc)
   datestring = '-'.join(map(str, [now.month, now.day, now.year]))
   filename = '%s/sundials-github-downloads.%s.txt' % (db_path, datestring)
   with open(filename, 'w') as outfile:
-    json.dump(releases, outfile)
+    json.dump(combined, outfile)
   print('')
   print('Successfully polled GitHub... stats saved to %s' % filename)
 
@@ -140,6 +168,8 @@ subparsers = parser.add_subparsers(title='subcommands')
 
 poll_parser = subparsers.add_parser('poll', help='poll GitHub for release download statisitics and store them')
 poll_parser.set_defaults(which='poll')
+poll_parser.add_argument('token',
+  help='GitHub authentication token')
 
 query_parser = subparsers.add_parser('query', help='query release download statisitics')
 query_parser.set_defaults(which='query')
