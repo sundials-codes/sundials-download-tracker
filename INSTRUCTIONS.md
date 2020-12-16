@@ -1,8 +1,13 @@
 This repository contains a script for polling the GitHub API to track the number of SUNDIALS downloads, storing the GitHub responses in json files in the `data` dirctory, and then querying this data to understand the number of SUNDIALS downloads in a particular date range.
 
+## What counts as a download??
+
+Right now, this just counts the number of times an "asset" on a SUNDIALS GitHub release has been downloaded.
+For example, the attached sundials-5.6.1.tar.gz file on the [SUNDIALS 5.6.1 release](https://github.com/LLNL/sundials/releases/tag/v5.6.1) is an asset.
+
 ## Setup
 
-First, you must have python installed, and the (requests)[https://pypi.org/project/requests/] package.
+First, you must have python installed, and the [requests](https://pypi.org/project/requests/) package.
 
 To install requests with pip:
 ```
