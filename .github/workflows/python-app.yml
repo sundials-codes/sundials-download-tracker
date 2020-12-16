@@ -33,7 +33,14 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run
       run: |
-        python get-sundials-downloads.sh poll
+        python --db data get-sundials-downloads.sh poll
+        python --db data get-sundials-downloads.sh query all --all-time > count.txt
+    - name: Commit report
+      run: |
+        git config --global user.name 'Cody Balos'
+        git config --global user.email 'balos1@users.noreply.github.com'
+        git commit -am "Automated stat save"
+        git push
     - uses: actions/upload-artifact@v2
       with:
         path: |
