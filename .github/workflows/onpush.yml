@@ -34,7 +34,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run
       run: |
-        python get-sundials-downloads.sh --db data poll ${{ secrets.SECRET_NAME }}
+        python get-sundials-downloads.sh --db data poll ${{ secrets.TRACK_DOWNLOADS }}
         python get-sundials-downloads.sh --db data query --date $(echo 01-01-$(date -u +'%Y')) $(date -u '+%m-%d-%Y') all > count.txt
     - uses: actions/upload-artifact@v2
       with:
