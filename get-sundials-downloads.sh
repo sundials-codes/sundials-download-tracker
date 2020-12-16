@@ -1,38 +1,30 @@
 #!/usr/bin/env python
 
+# SUNDIALS Copyright Start
+# Copyright (c) 2002-2020, Lawrence Livermore National Security
+# and Southern Methodist University.
+# All rights reserved.
+#
+# See the top-level LICENSE and NOTICE files for details.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+# SUNDIALS Copyright End
+
+
 import argparse, json, pprint, requests, sys
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from os import listdir
+
+
+###################################################
+# Helper functions
+###################################################
 
 def notify(good):
   if good:
     print('TODO: email sundials-developers with success message')
   else:
     print('TODO: email sundials-developers with fail message')
-
-
-def poll_github(args):
-  # Determine database location
-  if args.db:
-    db_path = args.db
-  else:
-    db_path = '.'
-
-  # TODO: Check if the response was successful, and if it was not, retry.
-  # Request the releases information from GitHub
-  r = requests.get('https://api.github.com/repos/LLNL/sundials/releases')
-  if r.ok:
-    # Save the response to a text file for archiving
-    releases = r.json()
-    now = datetime.now()
-    datestring = '-'.join(map(str, [now.month, now.day, now.year]))
-    filename = '%s/sundials-github-downloads.%s.txt' % (db_path, datestring)
-    with open(filename, 'w') as outfile:
-      json.dump(releases, outfile)
-    print('Successfully polled GitHub... stats saved to %s' % filename)
-    if args.notify: notify(True)
-  else:
-    if args.notify: notify(False)
 
 
 def sum_for_release(package_names, releases):
@@ -68,6 +60,9 @@ def find_ending(all_files, ending_when):
     print('WARNING: requested ending date is not found in the database, using the next closest date before the ending date')
   return (all_files[closest_date[1]], closest_date[0])
 
+###################################################
+# Subcommands
+###################################################
 
 def query_stats(args):
   # Determine which packages to check
@@ -88,7 +83,7 @@ def query_stats(args):
     ending_when   = datetime.strptime(args.date[1], '%m-%d-%Y')
   else:
     starting_when = datetime.strptime('01-01-1970', '%m-%d-%Y')
-    ending_when   = datetime.now()
+    ending_when   = datetime.now(tz=timezone.utc)
 
   # List files in database
   all_files = listdir(db_path)
@@ -109,11 +104,38 @@ def query_stats(args):
     difference = starting_count
 
   print('')
-  print('Counting downloads from %s to %s' % (actual_starting_date, actual_ending_date))
+  print('Counting downloads from %s UTC to %s UTC' % (actual_starting_date, actual_ending_date))
   print(json.dumps(difference, indent=4))
 
 
-###
+def poll_github(args):
+  # Determine database location
+  if args.db:
+    db_path = args.db
+  else:
+    db_path = '.'
+
+  # TODO: Check if the response was successful, and if it was not, retry.
+  # Request the releases information from GitHub
+  r = requests.get('https://api.github.com/repos/LLNL/sundials/releases')
+  if r.ok:
+    # Save the response to a text file for archiving
+    releases = r.json()
+    now = datetime.now(tz=timezone.utc)
+    datestring = '-'.join(map(str, [now.month, now.day, now.year]))
+    filename = '%s/sundials-github-downloads.%s.txt' % (db_path, datestring)
+    with open(filename, 'w') as outfile:
+      json.dump(releases, outfile)
+    print('')
+    print('Successfully polled GitHub... stats saved to %s' % filename)
+    if args.notify: notify(True)
+  else:
+    if args.notify: notify(False)
+
+
+###################################################
+# Argument parsing
+###################################################
 
 parser = argparse.ArgumentParser(description='Script to track the number of SUNDIALS downloads.')
 parser.add_argument('--db', type=str,
