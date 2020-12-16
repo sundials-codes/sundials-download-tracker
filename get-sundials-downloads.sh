@@ -11,9 +11,8 @@
 # SUNDIALS Copyright End
 
 
-import argparse, json, pprint, requests, sys
+import argparse, glob, json, pprint, requests, sys
 from datetime import datetime, timedelta, timezone
-from os import listdir
 
 
 ###################################################
@@ -79,17 +78,17 @@ def query_stats(args):
     ending_when   = datetime.now(tz=timezone.utc)
 
   # List files in database
-  all_files = listdir(db_path)
+  all_files = glob.glob(db_path + '/sundials-github-downloads*.txt')
 
   # Load beginning file
   start_file, actual_starting_date = find_beginning(all_files, starting_when)
-  with open(db_path + '/' + start_file, 'r') as json_file:
+  with open(start_file, 'r') as json_file:
     starting_count = sum_for_release(package_names, json.load(json_file))
 
   # Loand ending file unless doing all time count
   if not args.all_time:
     end_file, actual_ending_date = find_ending(all_files, ending_when)
-    with open(db_path + '/' + end_file, 'r') as json_file:
+    with open(end_file, 'r') as json_file:
       ending_count = sum_for_release(package_names, json.load(json_file))
     difference = {key: ending_count[key] - starting_count.get(key, 0) for key in ending_count}
   else:
