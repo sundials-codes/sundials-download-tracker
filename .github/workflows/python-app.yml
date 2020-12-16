@@ -37,7 +37,7 @@ jobs:
         python get-sundials-downloads.sh --db data query all --all-time > count.txt
     - name: Commit report
       run: |
-        git add sundials-github-downloads*.txt
+        git add data/sundials-github-downloads*.txt
         git config --global user.name 'Cody Balos'
         git config --global user.email 'balos1@users.noreply.github.com'
         git commit -am "Automated stat save"
