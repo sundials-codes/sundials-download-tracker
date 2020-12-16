@@ -2,7 +2,7 @@ This repository contains a script for polling the GitHub API to track the number
 
 ## What counts as a download??
 
-Right now, this just counts the number of times an "asset" on a SUNDIALS GitHub release has been downloaded.
+This counts the number of times an "asset" on a SUNDIALS GitHub release has been downloaded and the number of clones.
 For example, the attached sundials-5.6.1.tar.gz file on the [SUNDIALS 5.6.1 release](https://github.com/LLNL/sundials/releases/tag/v5.6.1) is an asset.
 
 ## Setup
