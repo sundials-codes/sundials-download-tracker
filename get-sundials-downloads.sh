@@ -96,8 +96,10 @@ def query_stats(args):
     difference = starting_count
 
   print('')
-  print('Counting downloads from %s UTC to %s UTC' % (actual_starting_date, actual_ending_date))
+  print('Counting downloads from %s UTC to %s UTC\n' % (actual_starting_date, actual_ending_date))
+  print('```')
   print(json.dumps(difference, indent=4))
+  print('```')
 
 
 def poll_github(args):
