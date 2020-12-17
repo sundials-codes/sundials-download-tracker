@@ -6,7 +6,7 @@ name: track SUNDIALS downloads
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '00 00 * * *'
+    - cron:  '06 00 * * *'
 
 jobs:
   build:

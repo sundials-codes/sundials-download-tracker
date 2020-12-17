@@ -11,7 +11,7 @@
 # SUNDIALS Copyright End
 
 
-import argparse, glob, json, pprint, requests, sys
+import argparse, glob, json, requests, sys
 from datetime import datetime, timedelta, timezone
 
 
@@ -29,17 +29,22 @@ def sum_up_clones(all_files, start_date, end_date):
         clone_count = clone_count + data['clones']
   return clone_count
 
+
 def sum_for_release(package_names, data):
   asset_counts = {}
   package_counts = {}
   for release in data['releases']:
+    # ignore draft releases
+    if release['draft'] == True: break
     for asset in release['assets']:
       for p in package_names:
         if asset['name'].startswith(p):
           asset_counts[asset['name']] = int(asset['download_count'])
           if p in package_counts:
+            # print('%s: total = %d + %d' % (asset['name'], package_counts[p], asset['download_count']))
             package_counts[p] = package_counts[p] + int(asset['download_count'])
           else:
+            # print('%s: total = %d' % (asset['name'], asset['download_count']))
             package_counts[p] = int(asset['download_count'])
   return package_counts
 
@@ -48,8 +53,6 @@ def find_beginning(all_files, starting_when):
   file_dates = [datetime.strptime(f.split('.')[1], '%m-%d-%Y').replace(tzinfo=timezone.utc) for f in all_files]
   diffs = [(d,idx) for idx, d in enumerate(file_dates) if d-starting_when >= timedelta(days=0)]
   closest_date = min(diffs, key=lambda x: x[0])
-  # if closest_date[0] != starting_when:
-    # print('WARNING: requested starting date is not found in the database, using the next closest date after the starting date')
   return (all_files[closest_date[1]], closest_date[0])
 
 
@@ -57,8 +60,6 @@ def find_ending(all_files, ending_when):
   file_dates = [datetime.strptime(f.split('.')[1], '%m-%d-%Y').replace(tzinfo=timezone.utc) for f in all_files]
   diffs = [(d,idx) for idx, d in enumerate(file_dates) if ending_when-d >= timedelta(days=0)]
   closest_date = max(diffs, key=lambda x: x[0])
-  # if closest_date[0] != ending_when:
-    # print('WARNING: requested ending date is not found in the database, using the next closest date before the ending date')
   return (all_files[closest_date[1]], closest_date[0])
 
 ###################################################
@@ -103,9 +104,6 @@ def query_stats(args):
   else:
     actual_ending_date = ending_when
     total_counts = starting_count
-
-  print(starting_count)
-  print(ending_count)
 
   # Now sum up clones
   total_counts['clones'] = sum_up_clones(all_files, actual_starting_date, actual_ending_date)
