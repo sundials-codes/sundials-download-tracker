@@ -136,12 +136,13 @@ def poll_github(args):
   r2.raise_for_status()
   clones = r2.json()
 
-  # Find the clone count for today
+  # Find the clone count for today-1
   combined = { 'releases': releases }
   now = datetime.now(tz=timezone.utc)
+  print(clones)
   for clone in clones['clones']:
     clone_date = datetime.strptime(clone['timestamp'], '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)
-    if clone_date.date() == now.date():
+    if clone_date.date() == (now.date() - timedelta(days=1)):
       combined['clones'] = clone['count']
       break
 
