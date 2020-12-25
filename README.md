@@ -1,5 +1,5 @@
 
-Counting downloads from 2020-12-23 00:00:00+00:00 UTC to 2020-12-24 00:00:00+00:00 UTC
+Counting downloads from 2020-12-23 00:00:00+00:00 UTC to 2020-12-25 00:00:00+00:00 UTC
 
 ```
 {
@@ -9,8 +9,8 @@ Counting downloads from 2020-12-23 00:00:00+00:00 UTC to 2020-12-24 00:00:00+00:
     "ida": 0,
     "idas": 0,
     "kinsol": 0,
-    "sundials": 3,
-    "clones": 149,
-    "total": 152
+    "sundials": 4,
+    "clones": 171,
+    "total": 175
 }
 ```
