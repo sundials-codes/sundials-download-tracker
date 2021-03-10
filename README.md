@@ -1,5 +1,5 @@
 
-Counting downloads from 2021-01-01 00:00:00+00:00 UTC to 2021-03-09 00:00:00+00:00 UTC
+Counting downloads from 2021-01-01 00:00:00+00:00 UTC to 2021-03-10 00:00:00+00:00 UTC
 
 ```
 {
@@ -9,8 +9,8 @@ Counting downloads from 2021-01-01 00:00:00+00:00 UTC to 2021-03-09 00:00:00+00:
     "ida": 11,
     "idas": 5,
     "kinsol": 16,
-    "sundials": 143,
-    "clones": 13032,
-    "total": 13233
+    "sundials": 144,
+    "clones": 13089,
+    "total": 13291
 }
 ```
