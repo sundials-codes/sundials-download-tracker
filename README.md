@@ -1,16 +1,16 @@
 
-Counting downloads from 2021-01-01 00:00:00+00:00 UTC to 2021-11-28 00:00:00+00:00 UTC
+Counting downloads from 2021-01-01 00:00:00+00:00 UTC to 2021-11-29 00:00:00+00:00 UTC
 
 ```
 {
-    "arkode": 229,
-    "cvode": 1274,
-    "cvodes": 290,
-    "ida": 455,
-    "idas": 184,
-    "kinsol": 257,
-    "sundials": 19545,
-    "clones": 72254,
-    "total": 94488
+    "arkode": 230,
+    "cvode": 1283,
+    "cvodes": 291,
+    "ida": 458,
+    "idas": 185,
+    "kinsol": 258,
+    "sundials": 19574,
+    "clones": 72662,
+    "total": 94941
 }
 ```
