@@ -1,5 +1,5 @@
 
-Counting downloads from 2022-01-01 00:00:00+00:00 UTC to 2022-07-03 00:00:00+00:00 UTC
+Counting downloads from 2022-01-01 00:00:00+00:00 UTC to 2022-07-04 00:00:00+00:00 UTC
 
 ```
 {
@@ -9,8 +9,8 @@ Counting downloads from 2022-01-01 00:00:00+00:00 UTC to 2022-07-03 00:00:00+00:
     "ida": 255,
     "idas": 111,
     "kinsol": 135,
-    "sundials": 12888,
-    "clones": 75547,
-    "total": 89983
+    "sundials": 12936,
+    "clones": 75771,
+    "total": 90255
 }
 ```
