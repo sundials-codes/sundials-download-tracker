@@ -1,5 +1,5 @@
 
-Counting downloads from 2023-01-01 00:00:00+00:00 UTC to 2023-02-26 00:00:00+00:00 UTC
+Counting downloads from 2023-01-01 00:00:00+00:00 UTC to 2023-02-27 00:00:00+00:00 UTC
 
 ```
 {
@@ -9,8 +9,8 @@ Counting downloads from 2023-01-01 00:00:00+00:00 UTC to 2023-02-26 00:00:00+00:
     "ida": 96,
     "idas": 44,
     "kinsol": 52,
-    "sundials": 5384,
-    "clones": 15016,
-    "total": 21095
+    "sundials": 5422,
+    "clones": 15147,
+    "total": 21264
 }
 ```
