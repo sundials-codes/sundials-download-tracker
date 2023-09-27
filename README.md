@@ -1,16 +1,16 @@
 
-Counting downloads from 2023-01-01 00:00:00+00:00 UTC to 2023-09-26 00:00:00+00:00 UTC
+Counting downloads from 2023-01-01 00:00:00+00:00 UTC to 2023-09-27 00:00:00+00:00 UTC
 
 ```
 {
-    "arkode": 782,
-    "cvode": 2525,
-    "cvodes": 515,
-    "ida": 453,
+    "arkode": 784,
+    "cvode": 2530,
+    "cvodes": 516,
+    "ida": 454,
     "idas": 196,
     "kinsol": 250,
-    "sundials": 34541,
-    "clones": 93595,
-    "total": 132857
+    "sundials": 34764,
+    "clones": 94147,
+    "total": 133641
 }
 ```
