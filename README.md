@@ -1,16 +1,16 @@
 
-Counting downloads from 2024-01-01 00:00:00+00:00 UTC to 2024-07-01 00:00:00+00:00 UTC
+Counting downloads from 2024-01-01 00:00:00+00:00 UTC to 2024-07-02 00:00:00+00:00 UTC
 
 ```
 {
-    "arkode": 668,
-    "cvode": 3386,
-    "cvodes": 1489,
-    "ida": 632,
-    "idas": 268,
-    "kinsol": 203,
-    "sundials": 72366,
-    "clones": 56273,
-    "total": 135285
+    "arkode": 670,
+    "cvode": 3393,
+    "cvodes": 1492,
+    "ida": 637,
+    "idas": 270,
+    "kinsol": 204,
+    "sundials": 72802,
+    "clones": 56469,
+    "total": 135937
 }
 ```
