@@ -1,3 +1,4 @@
+[![track SUNDIALS downloads](https://github.com/sundials-codes/sundials-download-tracker/actions/workflows/nightly.yml/badge.svg)](https://github.com/sundials-codes/sundials-download-tracker/actions/workflows/nightly.yml)
 
 Counting downloads from 2024-01-01 00:00:00+00:00 UTC to 2024-09-12 00:00:00+00:00 UTC
 
