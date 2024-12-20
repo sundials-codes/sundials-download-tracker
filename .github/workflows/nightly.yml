@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up Python 3.8
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: 3.8
     - name: Install dependencies
@@ -44,7 +44,7 @@ jobs:
         git config --global user.email 'balos1@users.noreply.github.com'
         git commit -am "Automated save of statistics"
         git push
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         path: |
           *.txt
