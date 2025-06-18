@@ -1,5 +1,5 @@
 
-Counting downloads from 2025-01-01 00:00:00+00:00 UTC to 2025-06-17 00:00:00+00:00 UTC
+Counting downloads from 2025-01-01 00:00:00+00:00 UTC to 2025-06-18 00:00:00+00:00 UTC
 
 ```
 {
@@ -8,9 +8,9 @@ Counting downloads from 2025-01-01 00:00:00+00:00 UTC to 2025-06-17 00:00:00+00:
     "cvodes": 3722,
     "ida": 821,
     "idas": 361,
-    "kinsol": 266,
-    "sundials": 35626,
-    "clones": 114712,
-    "total": 160930
+    "kinsol": 269,
+    "sundials": 35787,
+    "clones": 115874,
+    "total": 162256
 }
 ```
