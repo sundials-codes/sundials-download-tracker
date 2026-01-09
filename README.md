@@ -10,7 +10,7 @@ Counting downloads from 2026-01-09 00:00:00+00:00 UTC to 2026-01-09 00:00:00+00:
     "idas": 0,
     "kinsol": 0,
     "sundials": 0,
-    "clones": 0,
-    "total": 0
+    "clones": 799,
+    "total": 799
 }
 ```
