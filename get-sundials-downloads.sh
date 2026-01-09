@@ -132,6 +132,7 @@ def poll_github(args):
   r = requests.get('https://api.github.com/repos/LLNL/sundials/releases', headers=headers)
   r.raise_for_status()
   releases = r.json()
+  print(f'releases: {releases}')
 
   r2 = requests.get('https://api.github.com/repos/LLNL/sundials/traffic/clones?per=day', headers=headers)
   r2.raise_for_status()
@@ -140,7 +141,7 @@ def poll_github(args):
   # Find the clone count for today-1
   combined = { 'releases': releases }
   now = datetime.now(tz=timezone.utc)
-  print(clones)
+  print(f'clones: {clones}')
   for clone in clones['clones']:
     clone_date = datetime.strptime(clone['timestamp'], '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)
     if clone_date.date() == (now.date() - timedelta(days=1)):
