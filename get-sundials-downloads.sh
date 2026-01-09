@@ -26,7 +26,8 @@ def sum_up_clones(all_files, start_date, end_date):
     if file_date >= start_date and file_date <= end_date:
       with open(f, 'r') as json_file:
         data = json.load(json_file)
-        clone_count = clone_count + data['clones']
+        if 'clones' in data:
+          clone_count = clone_count + data['clones']
   return clone_count
 
 
