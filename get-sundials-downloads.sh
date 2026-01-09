@@ -144,7 +144,9 @@ def poll_github(args):
   print(f'clones: {clones}')
   for clone in clones['clones']:
     clone_date = datetime.strptime(clone['timestamp'], '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)
+    print(f'clone_date: {clone_date.date()}')
     if clone_date.date() == (now.date() - timedelta(days=1)):
+      print('now')
       combined['clones'] = clone['count']
       break
 
@@ -153,6 +155,7 @@ def poll_github(args):
   filename = '%s/sundials-github-downloads.%s.txt' % (db_path, datestring)
   with open(filename, 'w') as outfile:
     json.dump(combined, outfile)
+  print(f'combined: {combined}')
   print('')
   print('Successfully polled GitHub... stats saved to %s' % filename)
 
