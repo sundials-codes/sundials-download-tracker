@@ -132,11 +132,13 @@ def poll_github(args):
 
   # Request the releases information from GitHub
   r = requests.get('https://api.github.com/repos/LLNL/sundials/releases', headers=headers)
+  print(r)
   r.raise_for_status()
   releases = r.json()
   #print(f'releases: {releases}')
 
   r2 = requests.get('https://api.github.com/repos/LLNL/sundials/traffic/clones?per=day', headers=headers)
+  print(r2)
   r2.raise_for_status()
   clones = r2.json()
 
