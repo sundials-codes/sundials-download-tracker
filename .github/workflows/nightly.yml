@@ -45,7 +45,7 @@ jobs:
         git config --global user.email 'balos1@users.noreply.github.com'
         git commit -am "Automated save of statistics"
         git push
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
         path: |
           *.txt
