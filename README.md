@@ -1,5 +1,5 @@
 
-Counting downloads from 2026-01-09 00:00:00+00:00 UTC to 2026-03-14 00:00:00+00:00 UTC
+Counting downloads from 2026-01-09 00:00:00+00:00 UTC to 2026-03-15 00:00:00+00:00 UTC
 
 ```
 {
@@ -9,8 +9,8 @@ Counting downloads from 2026-01-09 00:00:00+00:00 UTC to 2026-03-14 00:00:00+00:
     "ida": 779,
     "idas": 377,
     "kinsol": 269,
-    "sundials": 79949,
-    "clones": 63421,
-    "total": 147890
+    "sundials": 80519,
+    "clones": 64610,
+    "total": 149649
 }
 ```
