@@ -1,16 +1,16 @@
 
-Counting downloads from 2026-01-09 00:00:00+00:00 UTC to 2026-05-19 00:00:00+00:00 UTC
+Counting downloads from 2026-01-09 00:00:00+00:00 UTC to 2026-05-20 00:00:00+00:00 UTC
 
 ```
 {
-    "arkode": 505,
-    "cvode": 3044,
-    "cvodes": 1174,
-    "ida": 1117,
-    "idas": 543,
-    "kinsol": 329,
-    "sundials": -37090,
-    "clones": 131904,
-    "total": 101526
+    "arkode": 506,
+    "cvode": 3052,
+    "cvodes": 1177,
+    "ida": 1125,
+    "idas": 548,
+    "kinsol": 330,
+    "sundials": -36273,
+    "clones": 134049,
+    "total": 104514
 }
 ```
